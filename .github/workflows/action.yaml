@@ -10,7 +10,7 @@ jobs:
     steps:
 
     - name: checkout repo content
-      uses: actions/checkout@v2 # checkout the repository content
+      uses: actions/checkout@v3 # checkout the repository content
 
     - name: fetch data, write timestamp as filename
       run: |
@@ -28,3 +28,9 @@ jobs:
       git config --local user.name "GitHub Action"
       git add -A
       git diff-index --quiet HEAD || (git commit -a -m "pulled data on schedule" --allow-empty)
+
+    - name: push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main 
