@@ -13,14 +13,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: fetch data, write timestamp as filename
-      run: |
-          curl 'https://gbfs.citibikenyc.com/gbfs/en/station_information.json' -o data/temp_stations.json \
-          curl 'https://gbfs.citibikenyc.com/gbfs/en/station_status.json' -o data/temp_status.json \
-          
-          timestamp=$(jq -r '.last_updated' 'data/temp-status.json') \
-
-          mv 'data/temp_stations.json' "data/{$timestamp}_stations.json" \
-          mv 'data/temp_status.json' "data/{$timestamp}_status}.json" \
+      run: bash pull_data.sh
 
     - name: commit files
       run: |
