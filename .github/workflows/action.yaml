@@ -2,7 +2,7 @@ name: pull full data
 
 on:
   schedule:
-    - cron: '0 5 8 * *'
+    - cron: '*/15 * * * *'
 
 jobs:
   build:
@@ -10,17 +10,17 @@ jobs:
     steps:
 
     - name: checkout repo content
-      uses: actions/checkout@v3 # checkout the repository content
+      uses: actions/checkout@v3
 
     - name: fetch data, write timestamp as filename
       run: |
           curl 'https://gbfs.citibikenyc.com/gbfs/en/station_information.json' -o data/temp_stations.json \
           curl 'https://gbfs.citibikenyc.com/gbfs/en/station_status.json' -o data/temp_status.json \
           
-          timestamp=($jq -r '.last_updated' 'data/temp-status.json') \
+          timestamp=$(jq -r '.last_updated' 'data/temp-status.json') \
 
-          mv temp_stations.json "data/{$timestamp}_stations.json" \
-          mv temp_status.json "data/{$timestamp}_status}.json" \
+          mv 'data/temp_stations.json' "data/{$timestamp}_stations.json" \
+          mv 'data/temp_status.json' "data/{$timestamp}_status}.json" \
 
     - name: commit files
       run: |
