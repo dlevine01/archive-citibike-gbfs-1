@@ -17,6 +17,9 @@ jobs:
       with:
         python-version: '3.10'
 
+    - name: install dependencies
+      run: pip install requests
+
     - name: fetch data, write timestamp as filename
       run: python pull_data.py
 
