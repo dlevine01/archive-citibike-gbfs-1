@@ -1,8 +1,7 @@
 name: pull full data
 
 on:
-  schedule:
-    - cron: '*/15 * * * *'
+  delete
 
 jobs:
   build:
